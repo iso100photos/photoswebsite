@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0C0809;
+  color: #F0E3DF;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0C0809;
+}
+::-webkit-scrollbar-thumb {
+  background: #3D2430;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C9A0AB;
+}
+
+/* Selection */
+::selection {
+  background-color: #C9A0AB;
+  color: #0C0809;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-7 py-3 bg-iso-rose text-iso-black font-medium tracking-wide text-sm transition-all duration-300 hover:bg-iso-blush hover:scale-[1.02] active:scale-[0.98];
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-7 py-3 border border-iso-rose text-iso-rose font-medium tracking-wide text-sm transition-all duration-300 hover:bg-iso-rose hover:text-iso-black hover:scale-[1.02] active:scale-[0.98];
+  }
+  .section-title {
+    @apply font-playfair text-3xl md:text-4xl lg:text-5xl text-iso-blush leading-tight;
+  }
+  .section-label {
+    @apply text-xs tracking-[0.25em] uppercase text-iso-rose font-medium mb-3 block;
+  }
+  .card {
+    @apply bg-iso-card border border-iso-border;
+  }
+}

@@ -1,0 +1,49 @@
+import type { Metadata } from 'next'
+import { Playfair_Display, Inter } from 'next/font/google'
+import './globals.css'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+export const metadata: Metadata = {
+  title: {
+    default: 'ISO100 Photography',
+    template: '%s | ISO100 Photography',
+  },
+  description: 'Professional photography by Zamira Schatschneider. Portraits, events, and editorial work captured with intention.',
+  keywords: ['photography', 'portrait photography', 'event photography', 'ISO100', 'photo editing'],
+  openGraph: {
+    title: 'ISO100 Photography',
+    description: 'Professional photography — portraits, events, and editorial work captured with intention.',
+    type: 'website',
+  },
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+      <body>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
+      </body>
+    </html>
+  )
+}
