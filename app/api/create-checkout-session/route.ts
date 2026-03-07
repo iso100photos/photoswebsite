@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
             product_data: {
               name: service.name,
               description: service.description,
-              images: [`${baseUrl}/logos/logo-light.png`],
             },
           },
         },
