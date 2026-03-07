@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const featuredWork = [
-  { id: 1, gradient: 'from-rose-950 via-stone-900 to-zinc-950', aspect: 'aspect-[3/4]', label: 'Portraits' },
-  { id: 2, gradient: 'from-zinc-900 via-stone-800 to-neutral-950', aspect: 'aspect-square', label: 'Events' },
-  { id: 3, gradient: 'from-stone-900 via-rose-950 to-zinc-900', aspect: 'aspect-[4/3]', label: 'Editorial' },
-  { id: 4, gradient: 'from-neutral-900 via-zinc-800 to-stone-950', aspect: 'aspect-[3/4]', label: 'Weddings' },
+  { src: '/gallery/portraits/01_dsc02987.jpg', label: 'Portraits' },
+  { src: '/gallery/personal-branding/02_dsc05862.jpg', label: 'Personal Branding' },
+  { src: '/gallery/lifestyle/03_lifestyle.jpg', label: 'Lifestyle' },
+  { src: '/gallery/graduations/01_dsc08502.jpg', label: 'Graduations' },
 ]
 
 const services = [
@@ -145,19 +145,20 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {featuredWork.map((item) => (
               <Link
-                key={item.id}
+                key={item.src}
                 href="/portfolio"
-                className={`relative overflow-hidden group bg-gradient-to-br ${item.gradient} ${item.aspect}`}
+                className="relative overflow-hidden group aspect-[3/4]"
               >
-                <div className="absolute inset-0 bg-iso-black/0 group-hover:bg-iso-black/30 transition-colors duration-300" />
+                <Image
+                  src={item.src}
+                  alt={item.label}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-iso-black/0 group-hover:bg-iso-black/40 transition-colors duration-300" />
                 <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span className="text-xs tracking-[0.2em] uppercase text-iso-rose">{item.label}</span>
-                </div>
-                {/* Photo placeholder indicator */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                  <svg className="w-10 h-10 text-iso-rose" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                  </svg>
                 </div>
               </Link>
             ))}
@@ -168,16 +169,21 @@ export default function HomePage() {
       {/* About teaser */}
       <section className="py-28 px-6 bg-iso-dark">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          {/* Placeholder portrait */}
-          <div className="relative aspect-[3/4] bg-gradient-to-br from-iso-plum via-iso-card to-iso-dark overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-              <Image
-                src="/logos/logo-dark.png"
-                alt="ISO100 Photography"
-                width={200}
-                height={200}
-                className="rounded-full"
-              />
+          {/* Brand image — matches about page */}
+          <div className="self-start">
+            <Image
+              src="/about-brand.png"
+              alt="ISO100 Photography — brand identity"
+              width={1300}
+              height={921}
+              className="w-full h-auto block"
+            />
+            <div className="flex items-center gap-4 mt-5 pl-1">
+              <div className="w-px h-10 bg-iso-rose flex-shrink-0" />
+              <div>
+                <p className="font-playfair text-iso-blush text-xl leading-snug">Zamira Schatschneider</p>
+                <p className="text-iso-muted text-xs tracking-[0.2em] uppercase mt-1">Photographer &amp; Retoucher</p>
+              </div>
             </div>
           </div>
 

@@ -61,9 +61,9 @@ export default function BookingPage() {
       {/* Cal.com embed */}
       <section className="py-12 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="border border-iso-border overflow-hidden">
+          <div className="overflow-hidden">
             <iframe
-              src="https://cal.com/zamira-schatschneider-1fpevp"
+              src="https://cal.com/zamira-schatschneider-1fpevp?theme=dark&brandColor=C9A0AB&backgroundColor=0C0809&foregroundColor=F0E3DF"
               width="100%"
               height="820"
               frameBorder="0"

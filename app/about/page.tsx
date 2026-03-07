@@ -34,21 +34,23 @@ export default function AboutPage() {
       {/* Header */}
       <section className="pt-40 pb-20 px-6 bg-iso-dark">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Portrait placeholder */}
-          <div className="relative aspect-[3/4] bg-gradient-to-br from-iso-plum via-iso-card to-iso-black overflow-hidden order-2 lg:order-1">
-            <div className="absolute inset-0 flex items-center justify-center opacity-15">
-              <Image
-                src="/logos/logo-dark.png"
-                alt=""
-                width={240}
-                height={240}
-                className="rounded-full"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <div className="border border-iso-border bg-iso-black/60 backdrop-blur-sm p-5">
-                <p className="font-playfair text-iso-blush text-lg">Zamira Schatschneider</p>
-                <p className="text-iso-muted text-sm tracking-wide">Photographer &amp; Retoucher</p>
+          {/* Brand image */}
+          <div className="order-2 lg:order-1 self-start">
+            <Image
+              src="/about-brand.png"
+              alt="ISO100 Photography — brand identity"
+              width={1300}
+              height={921}
+              className="w-full h-auto block"
+              priority
+            />
+
+            {/* Name below image */}
+            <div className="flex items-center gap-4 mt-5 pl-1">
+              <div className="w-px h-10 bg-iso-rose flex-shrink-0" />
+              <div>
+                <p className="font-playfair text-iso-blush text-xl leading-snug">Zamira Schatschneider</p>
+                <p className="text-iso-muted text-xs tracking-[0.2em] uppercase mt-1">Photographer &amp; Retoucher</p>
               </div>
             </div>
           </div>

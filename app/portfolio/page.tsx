@@ -1,36 +1,76 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-
-// Replace these placeholder items with real photo imports or next/image src paths
-const photos = [
-  { id: 1, category: 'portraits', gradient: 'from-rose-950 via-stone-900 to-zinc-950', aspect: 'aspect-[3/4]', title: 'Natural Light Portrait' },
-  { id: 2, category: 'events', gradient: 'from-zinc-900 via-stone-800 to-neutral-950', aspect: 'aspect-square', title: 'Evening Celebration' },
-  { id: 3, category: 'editorial', gradient: 'from-stone-900 via-rose-950 to-zinc-900', aspect: 'aspect-[2/3]', title: 'Studio Editorial' },
-  { id: 4, category: 'weddings', gradient: 'from-neutral-900 via-zinc-800 to-stone-950', aspect: 'aspect-[3/4]', title: 'Golden Hour Wedding' },
-  { id: 5, category: 'portraits', gradient: 'from-zinc-950 via-rose-900 to-stone-950', aspect: 'aspect-square', title: 'Outdoor Portrait' },
-  { id: 6, category: 'editorial', gradient: 'from-stone-800 via-neutral-900 to-zinc-950', aspect: 'aspect-[4/3]', title: 'Fashion Editorial' },
-  { id: 7, category: 'events', gradient: 'from-rose-900 via-zinc-900 to-stone-950', aspect: 'aspect-[2/3]', title: 'Corporate Event' },
-  { id: 8, category: 'weddings', gradient: 'from-neutral-950 via-stone-900 to-rose-950', aspect: 'aspect-square', title: 'Ceremony Details' },
-  { id: 9, category: 'portraits', gradient: 'from-zinc-900 via-rose-950 to-neutral-950', aspect: 'aspect-[3/4]', title: 'Studio Portrait' },
-  { id: 10, category: 'events', gradient: 'from-stone-950 via-zinc-800 to-rose-900', aspect: 'aspect-[4/3]', title: 'Birthday Party' },
-  { id: 11, category: 'weddings', gradient: 'from-rose-950 via-neutral-900 to-zinc-950', aspect: 'aspect-[3/4]', title: 'Bridal Session' },
-  { id: 12, category: 'editorial', gradient: 'from-zinc-800 via-stone-900 to-neutral-950', aspect: 'aspect-square', title: 'Lifestyle Shot' },
-]
 
 const categories = [
   { id: 'all', label: 'All Work' },
   { id: 'portraits', label: 'Portraits' },
-  { id: 'weddings', label: 'Weddings' },
-  { id: 'events', label: 'Events' },
-  { id: 'editorial', label: 'Editorial' },
+  { id: 'personal-branding', label: 'Personal Branding' },
+  { id: 'lifestyle', label: 'Lifestyle' },
+  { id: 'graduations', label: 'Graduations' },
+  { id: 'architecture', label: 'Architecture Photography' },
 ]
+
+const photos = [
+  // Portraits
+  { src: '/gallery/portraits/01_dsc02987.jpg', category: 'portraits', alt: 'Portrait' },
+  { src: '/gallery/portraits/02_dsc06008__2_.jpg', category: 'portraits', alt: 'Portrait' },
+  { src: '/gallery/portraits/03_dsc07542.jpg', category: 'portraits', alt: 'Portrait' },
+  // Personal Branding
+  { src: '/gallery/personal-branding/01_dsc04542.jpg', category: 'personal-branding', alt: 'Personal Branding' },
+  { src: '/gallery/personal-branding/02_dsc05862.jpg', category: 'personal-branding', alt: 'Personal Branding' },
+  { src: '/gallery/personal-branding/03_dsc05877.jpg', category: 'personal-branding', alt: 'Personal Branding' },
+  { src: '/gallery/personal-branding/04_dsc07423.jpg', category: 'personal-branding', alt: 'Personal Branding' },
+  // Lifestyle
+  { src: '/gallery/lifestyle/01_dsc02902.jpg', category: 'lifestyle', alt: 'Lifestyle' },
+  { src: '/gallery/lifestyle/02_dsc04631.jpg', category: 'lifestyle', alt: 'Lifestyle' },
+  { src: '/gallery/lifestyle/03_lifestyle.jpg', category: 'lifestyle', alt: 'Lifestyle' },
+  // Graduations
+  { src: '/gallery/graduations/01_dsc08502.jpg', category: 'graduations', alt: 'Graduation' },
+  { src: '/gallery/graduations/02_dsc08515.jpg', category: 'graduations', alt: 'Graduation' },
+  // Architecture
+  { src: '/gallery/architecture/01_dsc04126.jpg', category: 'architecture', alt: 'Architecture Photography' },
+]
+
+const categoryLabels: Record<string, string> = {
+  'portraits': 'Portraits',
+  'personal-branding': 'Personal Branding',
+  'lifestyle': 'Lifestyle',
+  'graduations': 'Graduations',
+  'architecture': 'Architecture Photography',
+}
 
 export default function PortfolioPage() {
   const [active, setActive] = useState('all')
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const filtered = active === 'all' ? photos : photos.filter((p) => p.category === active)
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), [])
+  const prev = useCallback(() => {
+    setLightboxIndex((i) => (i !== null ? (i - 1 + filtered.length) % filtered.length : null))
+  }, [filtered.length])
+  const next = useCallback(() => {
+    setLightboxIndex((i) => (i !== null ? (i + 1) % filtered.length : null))
+  }, [filtered.length])
+
+  useEffect(() => {
+    if (lightboxIndex === null) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox()
+      if (e.key === 'ArrowLeft') prev()
+      if (e.key === 'ArrowRight') next()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightboxIndex, closeLightbox, prev, next])
+
+  useEffect(() => {
+    document.body.style.overflow = lightboxIndex !== null ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [lightboxIndex])
 
   return (
     <>
@@ -40,7 +80,7 @@ export default function PortfolioPage() {
           <span className="section-label">Work</span>
           <h1 className="section-title">Portfolio</h1>
           <p className="text-iso-muted mt-4 max-w-xl leading-relaxed">
-            A selection of portraits, events, weddings, and editorial work. Each image is a moment worth preserving.
+            A curated selection of portraits, personal branding, lifestyle, graduations, and architecture photography.
           </p>
         </div>
       </section>
@@ -64,55 +104,36 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Gallery – CSS columns masonry */}
+      {/* Gallery */}
       <section className="px-6 py-12">
         <div className="max-w-7xl mx-auto">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
-            {filtered.map((photo) => (
-              <div
-                key={photo.id}
-                className={`break-inside-avoid mb-4 relative overflow-hidden group bg-gradient-to-br ${photo.gradient} ${photo.aspect}`}
+            {filtered.map((photo, i) => (
+              <button
+                key={`${photo.src}-${i}`}
+                onClick={() => setLightboxIndex(i)}
+                className="break-inside-avoid mb-4 relative overflow-hidden group w-full text-left cursor-zoom-in"
               >
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-iso-black/0 group-hover:bg-iso-black/50 transition-colors duration-300" />
-
-                {/* Caption */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 text-center">
-                  <span className="text-xs tracking-[0.2em] uppercase text-iso-rose mb-2">
-                    {photo.category}
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={800}
+                  height={1000}
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-iso-black/0 group-hover:bg-iso-black/40 transition-colors duration-300 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-xs tracking-[0.2em] uppercase text-iso-rose">
+                    {categoryLabels[photo.category]}
                   </span>
-                  <span className="font-playfair text-iso-blush text-lg">{photo.title}</span>
                 </div>
-
-                {/* Placeholder icon */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-[0.07]">
-                  <svg className="w-12 h-12 text-iso-rose" fill="none" stroke="currentColor" strokeWidth={0.8} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                  </svg>
-                </div>
-              </div>
+              </button>
             ))}
           </div>
-
           {filtered.length === 0 && (
             <p className="text-iso-muted text-center py-20">No photos in this category yet.</p>
           )}
-        </div>
-      </section>
-
-      {/* How to add photos note (dev only) */}
-      <section className="px-6 pb-16">
-        <div className="max-w-7xl mx-auto border border-dashed border-iso-border p-8 text-center">
-          <p className="text-iso-muted text-sm mb-2">
-            <span className="text-iso-rose font-medium">Developer note:</span> Replace the gradient placeholders above with real photos.
-          </p>
-          <p className="text-iso-muted text-xs">
-            Add your images to <code className="text-iso-rose">/public/gallery/</code> and update the{' '}
-            <code className="text-iso-rose">photos</code> array in{' '}
-            <code className="text-iso-rose">app/portfolio/page.tsx</code> with{' '}
-            <code className="text-iso-rose">src</code> fields, then swap the gradient divs for{' '}
-            <code className="text-iso-rose">next/image</code> components.
-          </p>
         </div>
       </section>
 
@@ -120,10 +141,54 @@ export default function PortfolioPage() {
       <section className="py-20 px-6 bg-iso-dark border-t border-iso-border text-center">
         <span className="section-label">Ready?</span>
         <h2 className="section-title mb-6">Let&apos;s create together</h2>
-        <Link href="/booking" className="btn-primary">
-          Book Your Session
-        </Link>
+        <Link href="/booking" className="btn-primary">Book Your Session</Link>
       </section>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-iso-black/95 backdrop-blur-sm flex items-center justify-center"
+          onClick={closeLightbox}
+        >
+          <div
+            className="relative max-w-5xl w-full mx-4 max-h-[90vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={filtered[lightboxIndex].src}
+              alt={filtered[lightboxIndex].alt}
+              width={1600}
+              height={1200}
+              className="max-h-[85vh] w-auto max-w-full object-contain"
+              priority
+            />
+            <div className="absolute bottom-4 left-0 right-0 text-center">
+              <span className="text-xs tracking-[0.2em] uppercase text-iso-rose">
+                {categoryLabels[filtered[lightboxIndex].category]}
+              </span>
+            </div>
+          </div>
+
+          <button onClick={closeLightbox} className="absolute top-6 right-6 text-iso-muted hover:text-iso-blush transition-colors" aria-label="Close">
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); prev() }} className="absolute left-4 top-1/2 -translate-y-1/2 text-iso-muted hover:text-iso-blush transition-colors p-2" aria-label="Previous">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); next() }} className="absolute right-4 top-1/2 -translate-y-1/2 text-iso-muted hover:text-iso-blush transition-colors p-2" aria-label="Next">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-iso-muted text-xs tracking-widest">
+            {lightboxIndex + 1} / {filtered.length}
+          </div>
+        </div>
+      )}
     </>
   )
 }
