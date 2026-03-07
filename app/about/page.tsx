@@ -23,8 +23,8 @@ const values = [
 ]
 
 const stats = [
-  { value: '500+', label: 'Sessions Completed' },
-  { value: '8+', label: 'Years of Experience' },
+  { value: '40+', label: 'Sessions Completed' },
+  { value: '2', label: 'Years of Experience' },
   { value: '100%', label: 'Client Satisfaction' },
 ]
 
