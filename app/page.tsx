@@ -9,6 +9,10 @@ const featuredWork = [
   { src: '/gallery/personal-branding/02_dsc05862.jpg', categoryKey: 'personal-branding' },
   { src: '/gallery/lifestyle/03_lifestyle.jpg', categoryKey: 'lifestyle' },
   { src: '/gallery/graduations/01_dsc08502.jpg', categoryKey: 'graduations' },
+  { src: '/gallery/landscapes/01_landscape.png', categoryKey: 'landscapes' },
+  { src: '/gallery/landscapes/02_landscape.png', categoryKey: 'landscapes' },
+  { src: '/gallery/landscapes/03_landscape.png', categoryKey: 'landscapes' },
+  { src: '/gallery/landscapes/04_landscape.png', categoryKey: 'landscapes' },
 ]
 
 const serviceIcons = [
