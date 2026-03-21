@@ -243,13 +243,13 @@ const en = {
     question: 'Have questions before booking?',
     cta: 'Get in Touch First',
   },
-} as const
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SPANISH TRANSLATIONS — Review and edit below before going live
 // ─────────────────────────────────────────────────────────────────────────────
 
-const es: typeof en = {
+const es = {
   nav: {
     home: 'Inicio',
     portfolio: 'Portafolio',
