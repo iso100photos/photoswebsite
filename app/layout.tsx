@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
+import { LanguageProvider } from '@/lib/language-context'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
@@ -41,9 +42,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </LanguageProvider>
       </body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-0M1SZQK3GY"

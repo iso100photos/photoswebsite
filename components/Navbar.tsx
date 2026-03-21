@@ -4,20 +4,22 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/booking', label: 'Booking' },
-  { href: '/contact', label: 'Contact' },
-]
+import { useLanguage } from '@/lib/language-context'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { lang, setLang, t } = useLanguage()
+
+  const navLinks = [
+    { href: '/', label: t.nav.home },
+    { href: '/portfolio', label: t.nav.portfolio },
+    { href: '/about', label: t.nav.about },
+    { href: '/services', label: t.nav.services },
+    { href: '/booking', label: t.nav.booking },
+    { href: '/contact', label: t.nav.contact },
+  ]
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
@@ -73,8 +75,26 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+
+          {/* Language toggle */}
+          <div className="flex items-center gap-1.5 text-xs tracking-widest border-l border-iso-border pl-6">
+            <button
+              onClick={() => setLang('en')}
+              className={`transition-colors duration-200 ${lang === 'en' ? 'text-iso-rose' : 'text-iso-muted hover:text-iso-blush'}`}
+            >
+              EN
+            </button>
+            <span className="text-iso-border">|</span>
+            <button
+              onClick={() => setLang('es')}
+              className={`transition-colors duration-200 ${lang === 'es' ? 'text-iso-rose' : 'text-iso-muted hover:text-iso-blush'}`}
+            >
+              ES
+            </button>
+          </div>
+
           <Link href="/booking" className="btn-primary text-xs px-5 py-2.5">
-            Book Now
+            {t.nav.bookNow}
           </Link>
         </nav>
 
@@ -84,21 +104,9 @@ export default function Navbar() {
           aria-label="Toggle menu"
           className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
         >
-          <span
-            className={`block w-6 h-px bg-iso-blush transition-all duration-300 origin-center ${
-              menuOpen ? 'rotate-45 translate-y-[7px]' : ''
-            }`}
-          />
-          <span
-            className={`block w-6 h-px bg-iso-blush transition-all duration-300 ${
-              menuOpen ? 'opacity-0' : ''
-            }`}
-          />
-          <span
-            className={`block w-6 h-px bg-iso-blush transition-all duration-300 origin-center ${
-              menuOpen ? '-rotate-45 -translate-y-[7px]' : ''
-            }`}
-          />
+          <span className={`block w-6 h-px bg-iso-blush transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+          <span className={`block w-6 h-px bg-iso-blush transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-6 h-px bg-iso-blush transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
         </button>
       </div>
 
@@ -114,16 +122,33 @@ export default function Navbar() {
               key={href}
               href={href}
               className={`text-base tracking-wider uppercase transition-colors duration-200 ${
-                pathname === href
-                  ? 'text-iso-rose'
-                  : 'text-iso-muted hover:text-iso-blush'
+                pathname === href ? 'text-iso-rose' : 'text-iso-muted hover:text-iso-blush'
               }`}
             >
               {label}
             </Link>
           ))}
+
+          {/* Language toggle — mobile */}
+          <div className="flex items-center gap-3 pt-2 border-t border-iso-border">
+            <span className="text-iso-muted text-xs tracking-widest uppercase">Language</span>
+            <button
+              onClick={() => setLang('en')}
+              className={`text-xs tracking-widest transition-colors duration-200 ${lang === 'en' ? 'text-iso-rose' : 'text-iso-muted'}`}
+            >
+              EN
+            </button>
+            <span className="text-iso-border text-xs">|</span>
+            <button
+              onClick={() => setLang('es')}
+              className={`text-xs tracking-widest transition-colors duration-200 ${lang === 'es' ? 'text-iso-rose' : 'text-iso-muted'}`}
+            >
+              ES
+            </button>
+          </div>
+
           <Link href="/booking" className="btn-primary text-sm mt-2 w-full text-center">
-            Book a Session
+            {t.nav.bookSession}
           </Link>
         </nav>
       </div>

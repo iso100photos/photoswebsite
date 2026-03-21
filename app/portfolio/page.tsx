@@ -3,48 +3,42 @@
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
-const categories = [
-  { id: 'all', label: 'All Work' },
-  { id: 'portraits', label: 'Portraits' },
-  { id: 'personal-branding', label: 'Personal Branding' },
-  { id: 'lifestyle', label: 'Lifestyle' },
-  { id: 'graduations', label: 'Graduations' },
-  { id: 'architecture', label: 'Architecture Photography' },
-]
+import { useLanguage } from '@/lib/language-context'
 
 const photos = [
   // Portraits
-  { src: '/gallery/portraits/01_dsc02987.jpg', category: 'portraits', alt: 'Portrait' },
-  { src: '/gallery/portraits/02_dsc06008__2_.jpg', category: 'portraits', alt: 'Portrait' },
-  { src: '/gallery/portraits/03_dsc07542.jpg', category: 'portraits', alt: 'Portrait' },
+  { src: '/gallery/portraits/01_dsc02987.jpg', category: 'portraits' },
+  { src: '/gallery/portraits/02_dsc06008__2_.jpg', category: 'portraits' },
+  { src: '/gallery/portraits/03_dsc07542.jpg', category: 'portraits' },
   // Personal Branding
-  { src: '/gallery/personal-branding/01_dsc04542.jpg', category: 'personal-branding', alt: 'Personal Branding' },
-  { src: '/gallery/personal-branding/02_dsc05862.jpg', category: 'personal-branding', alt: 'Personal Branding' },
-  { src: '/gallery/personal-branding/03_dsc05877.jpg', category: 'personal-branding', alt: 'Personal Branding' },
-  { src: '/gallery/personal-branding/04_dsc07423.jpg', category: 'personal-branding', alt: 'Personal Branding' },
+  { src: '/gallery/personal-branding/01_dsc04542.jpg', category: 'personal-branding' },
+  { src: '/gallery/personal-branding/02_dsc05862.jpg', category: 'personal-branding' },
+  { src: '/gallery/personal-branding/03_dsc05877.jpg', category: 'personal-branding' },
+  { src: '/gallery/personal-branding/04_dsc07423.jpg', category: 'personal-branding' },
   // Lifestyle
-  { src: '/gallery/lifestyle/01_dsc02902.jpg', category: 'lifestyle', alt: 'Lifestyle' },
-  { src: '/gallery/lifestyle/02_dsc04631.jpg', category: 'lifestyle', alt: 'Lifestyle' },
-  { src: '/gallery/lifestyle/03_lifestyle.jpg', category: 'lifestyle', alt: 'Lifestyle' },
+  { src: '/gallery/lifestyle/01_dsc02902.jpg', category: 'lifestyle' },
+  { src: '/gallery/lifestyle/02_dsc04631.jpg', category: 'lifestyle' },
+  { src: '/gallery/lifestyle/03_lifestyle.jpg', category: 'lifestyle' },
   // Graduations
-  { src: '/gallery/graduations/01_dsc08502.jpg', category: 'graduations', alt: 'Graduation' },
-  { src: '/gallery/graduations/02_dsc08515.jpg', category: 'graduations', alt: 'Graduation' },
+  { src: '/gallery/graduations/01_dsc08502.jpg', category: 'graduations' },
+  { src: '/gallery/graduations/02_dsc08515.jpg', category: 'graduations' },
   // Architecture
-  { src: '/gallery/architecture/01_dsc04126.jpg', category: 'architecture', alt: 'Architecture Photography' },
+  { src: '/gallery/architecture/01_dsc04126.jpg', category: 'architecture' },
 ]
 
-const categoryLabels: Record<string, string> = {
-  'portraits': 'Portraits',
-  'personal-branding': 'Personal Branding',
-  'lifestyle': 'Lifestyle',
-  'graduations': 'Graduations',
-  'architecture': 'Architecture Photography',
-}
-
 export default function PortfolioPage() {
+  const { t } = useLanguage()
   const [active, setActive] = useState('all')
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+  const categories = [
+    { id: 'all', label: t.portfolio.categories.all },
+    { id: 'portraits', label: t.portfolio.categories.portraits },
+    { id: 'personal-branding', label: t.portfolio.categories['personal-branding'] },
+    { id: 'lifestyle', label: t.portfolio.categories.lifestyle },
+    { id: 'graduations', label: t.portfolio.categories.graduations },
+    { id: 'architecture', label: t.portfolio.categories.architecture },
+  ]
 
   const filtered = active === 'all' ? photos : photos.filter((p) => p.category === active)
 
@@ -72,15 +66,18 @@ export default function PortfolioPage() {
     return () => { document.body.style.overflow = '' }
   }, [lightboxIndex])
 
+  const categoryLabel = (cat: string) =>
+    t.portfolio.categories[cat as keyof typeof t.portfolio.categories] ?? cat
+
   return (
     <>
       {/* Header */}
       <section className="pt-40 pb-16 px-6 bg-iso-dark">
         <div className="max-w-7xl mx-auto">
-          <span className="section-label">Work</span>
-          <h1 className="section-title">Portfolio</h1>
+          <span className="section-label">{t.portfolio.label}</span>
+          <h1 className="section-title">{t.portfolio.heading}</h1>
           <p className="text-iso-muted mt-4 max-w-xl leading-relaxed">
-            A curated selection of portraits, personal branding, lifestyle, graduations, and architecture photography.
+            {t.portfolio.description}
           </p>
         </div>
       </section>
@@ -116,7 +113,7 @@ export default function PortfolioPage() {
               >
                 <Image
                   src={photo.src}
-                  alt={photo.alt}
+                  alt={categoryLabel(photo.category)}
                   width={800}
                   height={1000}
                   className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
@@ -125,7 +122,7 @@ export default function PortfolioPage() {
                 <div className="absolute inset-0 bg-iso-black/0 group-hover:bg-iso-black/40 transition-colors duration-300 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span className="text-xs tracking-[0.2em] uppercase text-iso-rose">
-                    {categoryLabels[photo.category]}
+                    {categoryLabel(photo.category)}
                   </span>
                 </div>
               </button>
@@ -139,9 +136,9 @@ export default function PortfolioPage() {
 
       {/* CTA */}
       <section className="py-20 px-6 bg-iso-dark border-t border-iso-border text-center">
-        <span className="section-label">Ready?</span>
-        <h2 className="section-title mb-6">Let&apos;s create together</h2>
-        <Link href="/booking" className="btn-primary">Book Your Session</Link>
+        <span className="section-label">{t.portfolio.cta.label}</span>
+        <h2 className="section-title mb-6">{t.portfolio.cta.heading}</h2>
+        <Link href="/booking" className="btn-primary">{t.portfolio.cta.button}</Link>
       </section>
 
       {/* Lightbox */}
@@ -156,7 +153,7 @@ export default function PortfolioPage() {
           >
             <Image
               src={filtered[lightboxIndex].src}
-              alt={filtered[lightboxIndex].alt}
+              alt={categoryLabel(filtered[lightboxIndex].category)}
               width={1600}
               height={1200}
               className="max-h-[85vh] w-auto max-w-full object-contain"
@@ -164,7 +161,7 @@ export default function PortfolioPage() {
             />
             <div className="absolute bottom-4 left-0 right-0 text-center">
               <span className="text-xs tracking-[0.2em] uppercase text-iso-rose">
-                {categoryLabels[filtered[lightboxIndex].category]}
+                {categoryLabel(filtered[lightboxIndex].category)}
               </span>
             </div>
           </div>

@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { SERVICES } from '@/lib/services'
+import { useLanguage } from '@/lib/language-context'
 
 export default function ServicesPage() {
+  const { t } = useLanguage()
   const [loadingId, setLoadingId] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -49,10 +50,10 @@ export default function ServicesPage() {
       {/* Header */}
       <section className="pt-40 pb-16 px-6 bg-iso-dark">
         <div className="max-w-7xl mx-auto">
-          <span className="section-label">Services &amp; Shop</span>
-          <h1 className="section-title">Photo editing services</h1>
+          <span className="section-label">{t.services.label}</span>
+          <h1 className="section-title">{t.services.heading}</h1>
           <p className="text-iso-muted mt-4 max-w-xl leading-relaxed">
-            Professional retouching and editing services. Order online and receive your edited images delivered to your inbox.
+            {t.services.description}
           </p>
         </div>
       </section>
@@ -61,59 +62,62 @@ export default function ServicesPage() {
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((service) => (
-              <div
-                key={service.id}
-                className={`card p-8 flex flex-col relative transition-all duration-300 hover:border-iso-plum ${
-                  service.featured ? 'border-iso-rose' : ''
-                }`}
-              >
-                {service.featured && (
-                  <div className="absolute -top-px left-8 right-8 h-px bg-iso-rose" />
-                )}
-                {service.featured && (
-                  <span className="absolute top-4 right-4 text-[10px] tracking-[0.2em] uppercase text-iso-black bg-iso-rose px-2 py-1">
-                    Popular
-                  </span>
-                )}
-
-                <div className="mb-6">
-                  <p className="font-playfair text-2xl text-iso-blush mb-1">{service.name}</p>
-                  <p className="text-iso-rose text-3xl font-light">{service.priceDisplay}</p>
-                </div>
-
-                <p className="text-iso-muted text-sm leading-relaxed mb-6 flex-1">
-                  {service.description}
-                </p>
-
-                <ul className="flex flex-col gap-2 mb-8">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-sm text-iso-muted">
-                      <svg className="w-4 h-4 text-iso-rose flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  onClick={() => handlePurchase(service.id)}
-                  disabled={loadingId !== null}
-                  className={`w-full py-3 text-sm tracking-wider uppercase font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    service.featured
-                      ? 'bg-iso-rose text-iso-black hover:bg-iso-blush'
-                      : 'border border-iso-rose text-iso-rose hover:bg-iso-rose hover:text-iso-black'
+            {SERVICES.map((service) => {
+              const item = t.services.items[service.id as keyof typeof t.services.items]
+              return (
+                <div
+                  key={service.id}
+                  className={`card p-8 flex flex-col relative transition-all duration-300 hover:border-iso-plum ${
+                    service.featured ? 'border-iso-rose' : ''
                   }`}
                 >
-                  {loadingId === service.id ? 'Redirecting to checkout…' : 'Purchase'}
-                </button>
+                  {service.featured && (
+                    <div className="absolute -top-px left-8 right-8 h-px bg-iso-rose" />
+                  )}
+                  {service.featured && (
+                    <span className="absolute top-4 right-4 text-[10px] tracking-[0.2em] uppercase text-iso-black bg-iso-rose px-2 py-1">
+                      {t.services.popular}
+                    </span>
+                  )}
 
-                {errorMsg && loadingId === null && (
-                  <p className="mt-3 text-red-400 text-xs text-center">{errorMsg}</p>
-                )}
-              </div>
-            ))}
+                  <div className="mb-6">
+                    <p className="font-playfair text-2xl text-iso-blush mb-1">{item.name}</p>
+                    <p className="text-iso-rose text-3xl font-light">{service.priceDisplay}</p>
+                  </div>
+
+                  <p className="text-iso-muted text-sm leading-relaxed mb-6 flex-1">
+                    {item.description}
+                  </p>
+
+                  <ul className="flex flex-col gap-2 mb-8">
+                    {item.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-3 text-sm text-iso-muted">
+                        <svg className="w-4 h-4 text-iso-rose flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    onClick={() => handlePurchase(service.id)}
+                    disabled={loadingId !== null}
+                    className={`w-full py-3 text-sm tracking-wider uppercase font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+                      service.featured
+                        ? 'bg-iso-rose text-iso-black hover:bg-iso-blush'
+                        : 'border border-iso-rose text-iso-rose hover:bg-iso-rose hover:text-iso-black'
+                    }`}
+                  >
+                    {loadingId === service.id ? t.services.redirecting : t.services.purchase}
+                  </button>
+
+                  {errorMsg && loadingId === null && (
+                    <p className="mt-3 text-red-400 text-xs text-center">{errorMsg}</p>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -122,19 +126,16 @@ export default function ServicesPage() {
       <section className="py-20 px-6 bg-iso-dark border-t border-iso-border">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <span className="section-label">Process</span>
-            <h2 className="section-title">How it works</h2>
+            <span className="section-label">{t.services.howItWorks.label}</span>
+            <h2 className="section-title">{t.services.howItWorks.heading}</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
-            {[
-              { step: '01', title: 'Choose a service', desc: 'Select the editing package that fits your needs.' },
-              { step: '02', title: 'Secure checkout', desc: 'Complete payment via Stripe — safe and encrypted.' },
-              { step: '03', title: 'Upload your photos', desc: "You'll receive instructions to share your images." },
-              { step: '04', title: 'Receive your edits', desc: 'Delivered to your inbox within the stated timeframe.' },
-            ].map(({ step, title, desc }) => (
-              <div key={step} className="text-center">
-                <span className="font-playfair text-4xl text-iso-plum/60 block mb-4">{step}</span>
+            {t.services.howItWorks.steps.map(({ title, desc }, i) => (
+              <div key={i} className="text-center">
+                <span className="font-playfair text-4xl text-iso-plum/60 block mb-4">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 <p className="text-iso-blush text-sm font-medium mb-2">{title}</p>
                 <p className="text-iso-muted text-xs leading-relaxed">{desc}</p>
               </div>
@@ -150,7 +151,7 @@ export default function ServicesPage() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
           </svg>
           <p className="text-iso-muted text-sm">
-            All payments are processed securely by{' '}
+            {t.services.security}{' '}
             <span className="text-iso-rose">Stripe</span>. Your card details are never stored.
           </p>
         </div>
@@ -159,10 +160,10 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="py-16 px-6 bg-iso-dark border-t border-iso-border text-center">
         <p className="text-iso-muted text-sm mb-4">
-          Not sure which service is right for you?
+          {t.services.question}
         </p>
         <Link href="/contact" className="btn-outline text-sm">
-          Ask a Question
+          {t.services.askQuestion}
         </Link>
       </section>
     </>

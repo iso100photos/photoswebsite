@@ -1,15 +1,20 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
-
-const footerLinks = [
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/booking', label: 'Booking' },
-  { href: '/contact', label: 'Contact' },
-]
+import { useLanguage } from '@/lib/language-context'
 
 export default function Footer() {
+  const { t } = useLanguage()
+
+  const footerLinks = [
+    { href: '/portfolio', label: t.nav.portfolio },
+    { href: '/about', label: t.nav.about },
+    { href: '/services', label: t.nav.services },
+    { href: '/booking', label: t.nav.booking },
+    { href: '/contact', label: t.nav.contact },
+  ]
+
   return (
     <footer className="bg-iso-dark border-t border-iso-border">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -30,13 +35,13 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-iso-muted text-sm leading-relaxed max-w-xs">
-              Capturing life&apos;s most meaningful moments with artistry and intention.
+              {t.footer.tagline}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <p className="section-label">Navigation</p>
+            <p className="section-label">{t.footer.navigation}</p>
             <nav className="flex flex-col gap-3">
               {footerLinks.map(({ href, label }) => (
                 <Link
@@ -52,24 +57,23 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="section-label">Get in Touch</p>
+            <p className="section-label">{t.footer.getInTouch}</p>
             <div className="flex flex-col gap-3">
               <Link
                 href="/contact"
                 className="text-iso-muted hover:text-iso-rose text-sm tracking-wide transition-colors duration-200"
               >
-                Send a message
+                {t.footer.sendMessage}
               </Link>
               <Link
                 href="/booking"
                 className="text-iso-muted hover:text-iso-rose text-sm tracking-wide transition-colors duration-200"
               >
-                Book a session
+                {t.footer.bookSession}
               </Link>
               <div className="pt-4">
-                <p className="section-label">Follow Along</p>
+                <p className="section-label">{t.footer.followAlong}</p>
                 <div className="flex gap-4">
-                  {/* Social link placeholders – add your real URLs */}
                   <a
                     href="https://www.instagram.com/__iso100"
                     target="_blank"
@@ -101,7 +105,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} ISO100 Photography. All rights reserved.
           </p>
           <p className="text-iso-muted text-xs tracking-wide">
-            Crafted with care.
+            {t.footer.crafted}
           </p>
         </div>
       </div>

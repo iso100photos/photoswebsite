@@ -1,12 +1,11 @@
-import type { Metadata } from 'next'
-import Image from 'next/image'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Book a Session',
-  description: 'Schedule your photography session with ISO100 Photography.',
-}
+import Image from 'next/image'
+import { useLanguage } from '@/lib/language-context'
 
 export default function BookingPage() {
+  const { t } = useLanguage()
+
   return (
     <>
       {/* Header */}
@@ -19,10 +18,10 @@ export default function BookingPage() {
             height={72}
             className="rounded-full mx-auto mb-8"
           />
-          <span className="section-label">Scheduling</span>
-          <h1 className="section-title mb-5">Book a Session</h1>
+          <span className="section-label">{t.booking.label}</span>
+          <h1 className="section-title mb-5">{t.booking.heading}</h1>
           <p className="text-iso-muted leading-relaxed max-w-lg mx-auto">
-            Choose a date and time that works for you. Once booked, you&apos;ll receive a confirmation email with everything you need to know before your session.
+            {t.booking.description}
           </p>
         </div>
       </section>
@@ -30,23 +29,7 @@ export default function BookingPage() {
       {/* What to expect */}
       <section className="py-12 px-6 border-b border-iso-border">
         <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {[
-            {
-              step: '01',
-              title: 'Pick a time',
-              desc: 'Select from available slots using the scheduler below.',
-            },
-            {
-              step: '02',
-              title: 'Confirm details',
-              desc: 'Fill in a few short details about your session and vision.',
-            },
-            {
-              step: '03',
-              title: 'See you then',
-              desc: "You'll receive a confirmation email with session prep notes.",
-            },
-          ].map(({ step, title, desc }) => (
+          {t.booking.steps.map(({ step, title, desc }) => (
             <div key={step} className="flex gap-4 items-start">
               <span className="font-playfair text-3xl text-iso-plum leading-none flex-shrink-0">{step}</span>
               <div>
@@ -78,10 +61,10 @@ export default function BookingPage() {
       {/* Questions CTA */}
       <section className="py-16 px-6 bg-iso-dark border-t border-iso-border text-center">
         <p className="text-iso-muted text-sm mb-4">
-          Have questions before booking?
+          {t.booking.question}
         </p>
         <a href="/contact" className="btn-outline text-sm">
-          Get in Touch First
+          {t.booking.cta}
         </a>
       </section>
     </>
