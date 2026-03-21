@@ -24,6 +24,11 @@ const photos = [
   { src: '/gallery/graduations/02_dsc08515.jpg', category: 'graduations' },
   // Architecture
   { src: '/gallery/architecture/01_dsc04126.jpg', category: 'architecture' },
+  // Landscapes
+  { src: '/gallery/landscapes/01_landscape.png', category: 'landscapes' },
+  { src: '/gallery/landscapes/02_landscape.png', category: 'landscapes' },
+  { src: '/gallery/landscapes/03_landscape.png', category: 'landscapes' },
+  { src: '/gallery/landscapes/04_landscape.png', category: 'landscapes' },
 ]
 
 export default function PortfolioPage() {
@@ -38,6 +43,7 @@ export default function PortfolioPage() {
     { id: 'lifestyle', label: t.portfolio.categories.lifestyle },
     { id: 'graduations', label: t.portfolio.categories.graduations },
     { id: 'architecture', label: t.portfolio.categories.architecture },
+    { id: 'landscapes', label: t.portfolio.categories.landscapes },
   ]
 
   const filtered = active === 'all' ? photos : photos.filter((p) => p.category === active)

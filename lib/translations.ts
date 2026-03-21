@@ -79,7 +79,7 @@ const en = {
   portfolio: {
     label: 'Work',
     heading: 'Portfolio',
-    description: 'A curated selection of portraits, personal branding, lifestyle, graduations, and architecture photography.',
+    description: 'A curated selection of portraits, personal branding, lifestyle, graduations, architecture, and landscape photography.',
     categories: {
       all: 'All Work',
       portraits: 'Portraits',
@@ -87,6 +87,7 @@ const en = {
       lifestyle: 'Lifestyle',
       graduations: 'Graduations',
       architecture: 'Architecture Photography',
+      landscapes: 'Landscapes',
     },
     cta: {
       label: 'Ready?',
@@ -331,6 +332,7 @@ const es = {
       lifestyle: 'Lifestyle',
       graduations: 'Graduaciones',
       architecture: 'Fotografía de Arquitectura',
+      landscapes: 'Paisajes',
     },
     cta: {
       label: '¿Lista?',
