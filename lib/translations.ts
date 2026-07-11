@@ -88,6 +88,7 @@ const en = {
       graduations: 'Graduations',
       architecture: 'Architecture Photography',
       landscapes: 'Landscapes',
+      'africa-tanzania': 'Africa — Tanzania',
     },
     cta: {
       label: 'Ready?',
@@ -333,6 +334,7 @@ const es = {
       graduations: 'Graduaciones',
       architecture: 'Fotografía de Arquitectura',
       landscapes: 'Paisajes',
+      'africa-tanzania': 'África — Tanzania',
     },
     cta: {
       label: '¿Lista?',

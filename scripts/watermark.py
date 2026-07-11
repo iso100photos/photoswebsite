@@ -19,6 +19,7 @@ CATEGORY_MAP = {
     "Lifestyle":                "lifestyle",
     "Personal Branding":        "personal-branding",
     "Portraits":                "portraits",
+    "Africa-Tanzania":          "africa-tanzania",
 }
 
 WATERMARK_SCALE = 0.18  # watermark width = 18% of photo width

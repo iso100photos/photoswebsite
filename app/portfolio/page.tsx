@@ -29,6 +29,21 @@ const photos = [
   { src: '/gallery/landscapes/02_landscape.png', category: 'landscapes' },
   { src: '/gallery/landscapes/03_landscape.png', category: 'landscapes' },
   { src: '/gallery/landscapes/04_landscape.png', category: 'landscapes' },
+  // Africa - Tanzania
+  { src: '/gallery/africa-tanzania/02_dsc00092.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/03_dsc00100.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/04_dsc00191.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/05_dsc00211.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/06_dsc00299.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/07_dsc00417.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/08_dsc00447.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/09_dsc00580.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/10_dsc00720.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/11_dsc00781.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/12_dsc00865.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/13_dsc09514.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/14_dsc09537.jpg', category: 'africa-tanzania' },
+  { src: '/gallery/africa-tanzania/15_dsc09686.jpg', category: 'africa-tanzania' },
 ]
 
 export default function PortfolioPage() {
@@ -44,6 +59,7 @@ export default function PortfolioPage() {
     { id: 'graduations', label: t.portfolio.categories.graduations },
     { id: 'architecture', label: t.portfolio.categories.architecture },
     { id: 'landscapes', label: t.portfolio.categories.landscapes },
+    { id: 'africa-tanzania', label: t.portfolio.categories['africa-tanzania'] },
   ]
 
   const filtered = active === 'all' ? photos : photos.filter((p) => p.category === active)

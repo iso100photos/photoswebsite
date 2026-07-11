@@ -3,17 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLanguage } from '@/lib/language-context'
-
-const featuredWork = [
-  { src: '/gallery/portraits/01_dsc02987.jpg', categoryKey: 'portraits' },
-  { src: '/gallery/personal-branding/02_dsc05862.jpg', categoryKey: 'personal-branding' },
-  { src: '/gallery/lifestyle/03_lifestyle.jpg', categoryKey: 'lifestyle' },
-  { src: '/gallery/graduations/01_dsc08502.jpg', categoryKey: 'graduations' },
-  { src: '/gallery/landscapes/01_landscape.png', categoryKey: 'landscapes' },
-  { src: '/gallery/landscapes/02_landscape.png', categoryKey: 'landscapes' },
-  { src: '/gallery/landscapes/03_landscape.png', categoryKey: 'landscapes' },
-  { src: '/gallery/landscapes/04_landscape.png', categoryKey: 'landscapes' },
-]
+import FeaturedCarousel from '@/components/FeaturedCarousel'
 
 const serviceIcons = [
   (
@@ -149,29 +139,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {featuredWork.map((item) => (
-              <Link
-                key={item.src}
-                href="/portfolio"
-                className="relative overflow-hidden group aspect-[3/4]"
-              >
-                <Image
-                  src={item.src}
-                  alt={t.portfolio.categories[item.categoryKey as keyof typeof t.portfolio.categories]}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-iso-black/0 group-hover:bg-iso-black/40 transition-colors duration-300" />
-                <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-xs tracking-[0.2em] uppercase text-iso-rose">
-                    {t.portfolio.categories[item.categoryKey as keyof typeof t.portfolio.categories]}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <FeaturedCarousel />
         </div>
       </section>
 
