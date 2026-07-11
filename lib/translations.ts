@@ -348,9 +348,9 @@ const es = {
       label: 'Sobre Mí',
       line1: 'La persona',
       line2: 'detrás del lente',
-      bio1: 'Soy Zamira — una fotógrafa impulsada por la convicción de que cada momento merece ser recordado con belleza y verdad.',
-      bio2: 'Mi camino comenzó con una cámara de película prestada y una curiosidad que no podía ignorar. Años después, esa misma curiosidad da forma a cada sesión que dirijo — una búsqueda constante de la luz, la expresión, el instante que revela algo real.',
-      bio3: 'ISO100 Fotografía lleva el nombre de la velocidad de película más clara y fiel — y esa es exactamente mi filosofía. Visión clara. Color verdadero. Sin interferencias.',
+      bio1: 'Soy Zamira, una fotógrafa impulsada por la convicción de que cada momento merece ser recordado con belleza y autenticidad.',
+      bio2: 'Mi camino comenzó cuando, por recomendación de un amigo, decidí comprar mi primera cámara profesional. Fue él quien me ayudó a configurar los ajustes iniciales y quien me enseñó a utilizar una cámara profesional por primera vez. Lo que empezó como una simple curiosidad se transformó rápidamente en una pasión que no podía ignorar. Años después, esa misma curiosidad sigue dando forma a cada sesión que dirijo: una búsqueda constante de la luz, la expresión y ese instante único que revela algo real.',
+      bio3: 'ISO100 Fotografía lleva el nombre de la sensibilidad de una película conocida por ofrecer imágenes claras y fieles, y esa es exactamente mi filosofía: visión clara, color verdadero y sin interferencias.',
       title: 'Fotógrafa & Retocadora',
     },
     stats: {
